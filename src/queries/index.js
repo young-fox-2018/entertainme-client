@@ -96,3 +96,43 @@ export const createSeries = gql`
     }
   }
 `
+
+export const updateMovie = gql`
+  mutation UpdateMutation($id: String, $title: String, $overview: String, $poster_path: String, $popularity: Float, $status: String) {
+    updateMovie(id: $id, title: $title, overview: $overview, poster_path: $poster_path, popularity: $popularity, status: $status) {
+      info
+      data {
+        _id
+        title
+        overview
+        poster_path
+        popularity
+        status
+        tag {
+          _id
+          text
+        }
+      }
+    }
+  }
+`
+
+export const updateSeries = gql`
+  mutation UpdateMutation($id: String, $title: String, $overview: String, $poster_path: String, $popularity: Float, $status: String) {
+    updateSeries(id: $id, title: $title, overview: $overview, poster_path: $poster_path, popularity: $popularity, status: $status) {
+      info
+      data {
+        _id
+        title
+        overview
+        poster_path
+        popularity
+        status
+        tag {
+          _id
+          text
+        }
+      }
+    }
+  }
+`

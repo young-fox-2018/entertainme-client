@@ -7,6 +7,7 @@ import { moviesQuery, seriesQuery } from '../../queries'
 
 import Poster from '../../components/Poster'
 import Detail from '../Detail'
+import Form from '../Form'
 
 class List extends React.Component {
   render() {
@@ -36,6 +37,9 @@ const navigator = createStackNavigator({
   },
   Detail: {
     screen: Detail
+  },
+  Update: {
+    screen: Form
   }
 }, {
   headerMode: 'none',

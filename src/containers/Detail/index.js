@@ -15,6 +15,13 @@ class Detail extends Component {
     this.props.navigation.goBack()
   }
 
+  handleUpdateButton = () => {
+    this.props.navigation.navigate('Update', {
+      item: this.props.navigation.getParam('item'),
+      type: this.props.navigation.getParam('type')
+    })
+  }
+
   render() {
     let item = this.props.navigation.getParam('item')
     let type = this.props.navigation.getParam('type')
@@ -32,24 +39,22 @@ class Detail extends Component {
               {item.overview}
             </Text>
           </View>
-          <Mutation
-            mutation={deleteMutation}
-            refetchQueries={[{ query: refetchQuery }]}
-          >
-            {
-              deleteMutation =>
-                <View style={styles.actions}>
-                  <Button rounded danger
-                    onPress={this.mutate(deleteMutation)}
-                  >
+          <View style={styles.actions}>
+            <Mutation
+              mutation={deleteMutation}
+              refetchQueries={[{ query: refetchQuery }]}
+            >
+              {
+                deleteMutation =>
+                  <Button rounded danger onPress={this.mutate(deleteMutation)}>
                     <Text>Delete</Text>
                   </Button>
-                  <Button rounded warning>
-                    <Text>Update</Text>
-                  </Button>
-                </View>
-            }
-          </Mutation>
+              }
+            </Mutation>
+            <Button rounded warning onPress={this.handleUpdateButton}>
+              <Text>Update</Text>
+            </Button>
+          </View>
         </ScrollView>
 
       </ImageBackground>

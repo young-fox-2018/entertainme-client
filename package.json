@@ -12,6 +12,7 @@
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
     "native-base": "^2.10.0",
+    "ramda": "^0.26.1",
     "react": "16.6.3",
     "react-apollo": "^2.4.0",
     "react-native": "0.57.8",
