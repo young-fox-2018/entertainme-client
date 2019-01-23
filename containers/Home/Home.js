@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, FlatList } from 'react-native';
+import { Platform, StyleSheet, Text, View, FlatList, ScrollView } from 'react-native';
 import { Query } from "react-apollo";
-import gql from "graphql-tag";
 
+//components
 import Poster from './Poster/Poster'
+
+//queries
+import getMovies from '../../queries/getMovies'
+import getTv from '../../queries/getTv'
 
 export default class Home extends Component {
     static navigationOptions = () =>{
@@ -17,36 +21,18 @@ export default class Home extends Component {
                 <View style={{flex:1}}>
                     <Query
                     style={{flex:1}}
-                        query={gql`{
-
-                            getMovies{
-                                info
-                                data {
-                                _id
-                                title
-                                overview
-                                poster_path
-                                popularity
-                                tag {
-                                    text
-                                }
-                                }
-                            }
-                        }
-                        `}
+                        query={getMovies}
                     >
                         {({ loading, error, data }) => {
                             if (loading) return <Text>loading</Text>;
-                            if (error) return <Text>error</Text>;
-
-                            // return <Text>{JSON.stringify(data)}</Text>
+                            if (error) return <ScrollView><Text>{alert(JSON.stringify(error))}</Text></ScrollView>;
                             return (
                                 <FlatList
                                     data={data.getMovies.data}
                                     keyExtractor={(item, index) => index.toString()}
                                     horizontal={true}
                                     renderItem={({item}) => {
-                                        return <Poster data={item} navigation={this.props.navigation}/>
+                                        return <Poster data={item} navigation={this.props.navigation} type="movie"/>
                                     }}
 
                                 />
@@ -56,45 +42,21 @@ export default class Home extends Component {
                 </View>
                 <View style={{flex:1}}>
                     <Query
-                        query={gql`{
-
-                            getTv{
-                                info
-                                data {
-                                _id
-                                title
-                                overview
-                                poster_path
-                                popularity
-                                tag {
-                                    text
-                                }
-                                }
-                            }
-                        }
-                        `}
+                        query={getTv}
                     >
                         {({ loading, error, data }) => {
                             if (loading) return <Text>loading</Text>;
-                            if (error) return <Text>error</Text>;
-
-                            // return <Text>{JSON.stringify(data)}</Text>
+                            if (error) return <ScrollView><Text>{alert(JSON.stringify(error))}</Text></ScrollView>;
                             return (
                                 <FlatList
                                     data={data.getTv.data}
                                     horizontal={true}
                                     keyExtractor={(item, index) => index.toString()}
                                     renderItem={({item}) => {
-                                        return <Poster data={item} navigation={this.props.navigation}/>
+                                        return <Poster data={item} navigation={this.props.navigation} type="tv"/>
                                     }}
                                 />
-
-                                
-
                             )
-                            // data.getTv.data.map(({ _id, title }) => (
-                            //     <Text key={_id}>{title}</Text>
-                            // ));
                         }}
                     </Query>
                 </View>
