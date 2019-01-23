@@ -1,7 +1,7 @@
-import { createMaterialTopTabNavigator , createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 import MoviePage from './src/containers/MoviePage/index.js';
 import Details from './src/components/Details/index.js';
-import TvSeries from './src/components/TvList/index.js';
+import TvSeries from './src/containers/TvSeriesPage/index.js';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import React from 'react';
 
@@ -19,6 +19,7 @@ const TvSeriesStack = createStackNavigator({
   Details: Details,
 },
 {
+  headerMode: 'none',
   initialRouteName: 'TvSeries'
 })
 
@@ -28,7 +29,7 @@ const tabNavigator = createBottomTabNavigator(
       screen: MovieStack,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) =>(
-          <Icon name="movie" size={30} color="black" />
+          <Icon name="movie" size={30} color={tintColor} />
         )
       }
     },
@@ -36,15 +37,17 @@ const tabNavigator = createBottomTabNavigator(
       screen: TvSeriesStack,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="film" size={30} color="red" />
+          <Icon name="tv" size={30} color={tintColor} />
         )
       }
     },
-  },
+  }, 
   {
     tabBarOptions: {
-        showLabel: false
+        showLabel: false,
+        inactiveTintColor: 'black',
+        activeTintColor: '#6BBAB4',
     }
   })
 
-export default createAppContainer(tabNavigator)
+export default createAppContainer(tabNavigator);

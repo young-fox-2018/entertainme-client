@@ -14,19 +14,12 @@ class MovieItem extends Component {
       poster_path: this.props.poster_path,
       status: this.props.status,
       tag: this.props.tag,
-      id: this.props._id
+      id: this.props.id,
+      previousRoute: this.props.navigation.state.routeName
     });
   }
 
-  static navigationOptions = () => {
-    return {
-      headerTitle: 'Kuda'
-    }
-  }
-
   render() {
-    const overview = String(this.props.overview.substring(0, 90));
-
     return (
       <TouchableOpacity
           onPress={this.openUpdateForm}
