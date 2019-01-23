@@ -3,7 +3,7 @@ import { View, Image, ScrollView, StyleSheet, ImageBackground } from 'react-nati
 import { Button, Text } from 'native-base'
 import { Mutation } from "react-apollo"
 
-import { deleteMovie, moviesQuery } from '../../queries'
+import { deleteMovie, moviesQuery, deleteSeries, seriesQuery } from '../../queries'
 
 class Detail extends Component {
   mutate = fn => () => {
@@ -17,27 +17,30 @@ class Detail extends Component {
 
   render() {
     let item = this.props.navigation.getParam('item')
+    let type = this.props.navigation.getParam('type')
+    let deleteMutation = type === "movie" ? deleteMovie : deleteSeries
+    let refetchQuery = type === "movie" ? moviesQuery : seriesQuery
     return (
-      <Mutation
-        mutation={deleteMovie}
-        refetchQueries={[{ query: moviesQuery }]}
-      >
-        {
-          deleteMovie =>
-            <ImageBackground source={{ uri: `${item.poster_path}` }} style={{ width: '100%', height: '100%' }}>
-              <ScrollView style={styles.container}>
-                <View style={styles.top}>
-                  <Text style={styles.titleText}>{item.title}</Text>
-                  <Text style={styles.popularityText}>Popularity: {item.popularity}</Text>
-                </View>
-                <View style={styles.overview}>
-                  <Text style={styles.overviewText}>
-                    {item.overview}
-                  </Text>
-                </View>
+      <ImageBackground source={{ uri: `${item.poster_path}` }} style={{ width: '100%', height: '100%' }}>
+        <ScrollView style={styles.container}>
+          <View style={styles.top}>
+            <Text style={styles.titleText}>{item.title}</Text>
+            <Text style={styles.popularityText}>Popularity: {item.popularity}</Text>
+          </View>
+          <View style={styles.overview}>
+            <Text style={styles.overviewText}>
+              {item.overview}
+            </Text>
+          </View>
+          <Mutation
+            mutation={deleteMutation}
+            refetchQueries={[{ query: refetchQuery }]}
+          >
+            {
+              deleteMutation =>
                 <View style={styles.actions}>
                   <Button rounded danger
-                    onPress={this.mutate(deleteMovie)}
+                    onPress={this.mutate(deleteMutation)}
                   >
                     <Text>Delete</Text>
                   </Button>
@@ -45,11 +48,11 @@ class Detail extends Component {
                     <Text>Update</Text>
                   </Button>
                 </View>
-              </ScrollView>
+            }
+          </Mutation>
+        </ScrollView>
 
-            </ImageBackground>
-        }
-      </Mutation>
+      </ImageBackground>
     )
   }
 }

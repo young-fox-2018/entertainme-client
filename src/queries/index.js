@@ -56,3 +56,43 @@ export const deleteSeries = gql`
     }
   }
 `
+
+export const createMovie = gql`
+  mutation PostMutation($title: String, $overview: String, $poster_path: String, $popularity: Float, $status: String) {
+    createMovie(title: $title, overview: $overview, poster_path: $poster_path, popularity: $popularity, status: $status) {
+      info
+      data {
+        _id
+        title
+        overview
+        poster_path
+        popularity
+        status
+        tag {
+          _id
+          text
+        }
+      }
+    }
+  }
+`
+
+export const createSeries = gql`
+  mutation PostMutation($title: String, $overview: String, $poster_path: String, $popularity: Float, $status: String) {
+    createSeries(title: $title, overview: $overview, poster_path: $poster_path, popularity: $popularity, status: $status) {
+      info
+      data {
+        _id
+        title
+        overview
+        poster_path
+        popularity
+        status
+        tag {
+          _id
+          text
+        }
+      }
+    }
+  }
+`

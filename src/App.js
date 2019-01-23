@@ -4,8 +4,8 @@ import { Icon } from 'native-base'
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-boost";
 
-import Movies from './containers/Movies'
-import Series from './containers/Series'
+import List from './containers/List'
+import Form from './containers/Form'
 
 const client = new ApolloClient({
   uri: "http://13.250.42.194:3000/graphql"
@@ -14,15 +14,23 @@ const client = new ApolloClient({
 const AppNavigator = createBottomTabNavigator(
   {
     Movies: {
-      screen: Movies,
+      screen: () => <List screenProps={{ type: "movies" }} />,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <Icon name="md-film" style={{ color: tintColor }} />
         ),
       }
     },
+    Form: {
+      screen: Form,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name="md-add-circle" style={{ color: tintColor }} />
+        ),
+      },
+    },
     Series: {
-      screen: Series,
+      screen: () => <List screenProps={{ type: "series" }} />,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <Icon name="md-desktop" style={{ color: tintColor }} />

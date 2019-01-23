@@ -5,7 +5,8 @@ import { withNavigation } from 'react-navigation'
 class Poster extends Component {
   handlePress = () => {
     this.props.navigation.navigate('Detail', {
-      item: this.props.item
+      item: this.props.item,
+      type: this.props.type
     })
   }
 

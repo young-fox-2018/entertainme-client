@@ -1,30 +1,28 @@
 import React from 'react'
-import { View, Text, ScrollView, FlatList } from 'react-native'
+import { Text, FlatList } from 'react-native'
 import { Query } from "react-apollo"
 import { createAppContainer, createStackNavigator } from "react-navigation"
 
-import { seriesQuery } from '../../queries'
+import { moviesQuery, seriesQuery } from '../../queries'
 
 import Poster from '../../components/Poster'
-import Detail from '../Detail/series'
+import Detail from '../Detail'
 
-class Series extends React.Component {
-  static navigationOptions = {
-    title: 'Series',
-  };
-
+class List extends React.Component {
   render() {
+    let type = this.props.screenProps.type
+    let query = type === "movies" ? moviesQuery : seriesQuery
     return (
-      <Query query={seriesQuery}>
+      <Query query={query}>
         {({ loading, error, data }) => {
           if (loading) return <Text>Loading...</Text>;
           if (error) return <Text>Error :(</Text>;
           return <FlatList
-            data={data.series.data}
+            data={data[type].data}
             keyExtractor={item => item._id}
             horizontal={false}
             numColumns={2}
-            renderItem={({ item }) => <Poster item={item} />}
+            renderItem={({ item }) => <Poster item={item} type={type === "movies" ? "movie" : "series"} />}
           />
         }}
       </Query>
@@ -33,17 +31,14 @@ class Series extends React.Component {
 }
 
 const navigator = createStackNavigator({
-  Home: {
-    screen: Series,
+  List: {
+    screen: List,
   },
   Detail: {
     screen: Detail
   }
 }, {
   headerMode: 'none',
-  // navigationOptions: {
-  //   headerVisible: false
-  // }
 })
 
 export default createAppContainer(navigator)
