@@ -49,10 +49,10 @@ class MovieDetail extends Component {
                         keyExtractor={(item, index) => index.toString()}
                     />
                 </View>
-                <View style={styles.button}>
+                <View style={styles.buttonEdit}>
                     <Button
                         title="Edit"
-                        color="orange"
+                        color="#F6B45B"
                         onPress={ () => navigate('Edit', {data, type}) }
                     />
                 </View>
@@ -63,10 +63,10 @@ class MovieDetail extends Component {
                     >
                         {
                             remove => (
-                                <View>
+                                <View style={styles.buttonDelete}>
                                     <Button
                                         title="Delete"
-                                        color="#BA0000"
+                                        color="#D85555"
                                         onPress={() => (
                                             remove({ variables: { id: data._id } }),
                                             this.props.navigation.goBack()
@@ -85,7 +85,8 @@ class MovieDetail extends Component {
 const styles = StyleSheet.create({
     imageContainer: {
         alignItems: 'center',
-        height: 380
+        height: 380,
+        marginTop: 20
     },
     textContainer: {
         flexDirection: 'row',
@@ -102,8 +103,16 @@ const styles = StyleSheet.create({
         flex: 4,
         marginRight: 30
     },
-    button: {
-        marginTop: 30,
+    buttonEdit: {
+        marginLeft: 30,
+        marginRight: 30,
+        marginTop: 30
+    },
+    buttonDelete: {
+        marginLeft: 30,
+        marginRight: 30,
+        marginTop: 10,
+        marginBottom: 20
     }
 })
 
