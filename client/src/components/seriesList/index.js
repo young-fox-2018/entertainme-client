@@ -10,7 +10,7 @@ class MovieList extends Component {
     state = {  }
     static navigationOptions({ navigation }) {
         return {
-            title: "EntertainMe | Series",
+            title: "EntertainMe | TV Series",
             headerTintColor: '#083D77',
             // headerStyle: { backgroundColor: '#D5DBDB' },
         }

@@ -15,6 +15,10 @@ class MovieDetail extends Component {
     render() {
         const data = this.props.navigation.getParam('data')
         const type = this.props.navigation.getParam('type')
+        const mutation = type === 'movies' ? deleteMovieQuery : deleteSeriesQuery
+        const refetchQuery = type === 'movies' ? moviesQuery : seriesQuery
+        const { navigate } = this.props.navigation
+
         return (
             <ScrollView>
                 <View style={styles.imageContainer}>
@@ -45,51 +49,34 @@ class MovieDetail extends Component {
                         keyExtractor={(item, index) => index.toString()}
                     />
                 </View>
+                <View style={styles.button}>
+                    <Button
+                        title="Edit"
+                        color="orange"
+                        onPress={ () => navigate('Edit', {data, type}) }
+                    />
+                </View>
                 {
-                    type === "movies"
-                        ? <Mutation
-                            mutation={deleteMovieQuery}
-                            refetchQueries={[{ query: moviesQuery }]}
-                        >
-                            {
-                                deleteMovie => (
-                                    <View style={styles.button}>
-                                        <Button
-                                            title="Delete"
-                                            color="#BA0000"
-                                            onPress={() => (
-                                                deleteMovie({ variables: { id: data._id } }),
-                                                this.props.navigation.goBack()
-                                            )} />
-                                    </View>
-                                )
-                            }
-                        </Mutation>
-                        : type === 'series'
-                            ? <Mutation
-                                mutation={deleteSeriesQuery}
-                                refetchQueries={[{ query: seriesQuery }]}
-                            >
-                                {
-                                    deleteMovie => (
-                                        <View style={styles.button}>
-                                            <Button
-                                                title="Delete"
-                                                color="#BA0000"
-                                                onPress={() => (
-                                                    deleteMovie({ variables: { id: data._id } }),
-                                                    this.props.navigation.goBack()
-                                                )} />
-                                        </View>
-                                    )
-                                }
-                            </Mutation>
-                            : null
+                    <Mutation
+                        mutation={mutation}
+                        refetchQueries={[{ query: refetchQuery }]}
+                    >
+                        {
+                            remove => (
+                                <View>
+                                    <Button
+                                        title="Delete"
+                                        color="#BA0000"
+                                        onPress={() => (
+                                            remove({ variables: { id: data._id } }),
+                                            this.props.navigation.goBack()
+                                        )} />
+                                </View>
+                            )
+                        }
+                    </Mutation>
+                       
                 }
-                {/* <View style={styles.button}>
-                    <Button title="Edit" color="#E7BB41" />
-                </View> */}
-
             </ScrollView>
         )
     }

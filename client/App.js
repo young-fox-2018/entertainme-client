@@ -5,9 +5,10 @@ import { createBottomTabNavigator, createAppContainer } from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Movies from './src/container/movies'
 import Series from './src/container/series'
+import Add from './src/components/add'
 
 const appNavigator = createBottomTabNavigator({
-  Home: {
+  Movies: {
     screen: Movies,
     navigationOptions: {
       tabBarOptions: { 
@@ -44,6 +45,26 @@ const appNavigator = createBottomTabNavigator({
       },
       tabBarIcon: ({ tintColor }) => (
         <Icon name="tv" size={25} color={tintColor} />
+      )
+    }
+  },
+  Add: {
+    screen: Add,
+    navigationOptions: {
+      tabBarOptions: { 
+        showIcon: true,
+        showLabel: false,
+        activeTintColor: '#EBEBD3',
+        inactiveTintColor: 'grey',
+        labelStyle: {
+          fontSize: 12,
+        },
+        style: {
+          backgroundColor: '#083D77',
+        }
+      },
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="add" size={25} color={tintColor} />
       )
     }
   }
